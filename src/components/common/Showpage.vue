@@ -1,0 +1,1301 @@
+<template>
+    <div class='echarts'>
+        <el-row>
+            <el-col :span="8" class="time">{{ date | formatDate }}</el-col>
+            <el-col :span="8">
+                <h1 id="title">高翔水务大数据管理平台</h1>
+            </el-col>
+            <el-col :span="8">
+            </el-col>
+        </el-row>
+        <el-row class="contant">
+            <el-col :span="7">
+                <p class="table-title">各地设备使用状态：</p>
+                <el-table
+                        :data="tableData2"
+                        style="width: 90%"
+                        height="250px"
+                        size="small"
+                        :row-class-name="tableRowClassName">
+                    <el-table-column
+                            prop="area"
+                            label="地区"
+                            width="100">
+                    </el-table-column>
+                    <el-table-column
+                            prop="pattern"
+                            label="模式">
+                    </el-table-column>
+                    <el-table-column
+                            prop="work"
+                            width="80"
+                            label="运转情况">
+                    </el-table-column>
+                </el-table>
+                <!--<el-row class="contant-top">-->
+                    <!--<el-col :span="12">-->
+                        <!--<div :style="{height:'250px',width:'90%',marginTop: '12px'}" ref='myEcharts'></div>-->
+                    <!--</el-col>-->
+                    <!--<el-col :span="12">-->
+                        <!--<div :style="{height:'250px',width:'90%',marginTop: '12px'}" ref='myEchartss'></div>-->
+                    <!--</el-col>-->
+                <!--</el-row>-->
+                <div :style="{height:'250px',width:'90%',marginTop: '12px'}" ref='myEcharts'></div>
+                <div :style="{height:'250px',width:'90%',marginTop: '12px'}" ref='myEchartss'></div>
+                <div :style="{height:'250px',width:'90%',marginTop: '12px'}" ref='myEchartcod'></div>
+            </el-col>
+            <el-col :span="10">
+                <div :style="{height:'400px',width:'90%',margin: 'auto'}" ref='myEchart'></div>
+                <div id="devicedata">
+                    <p class="table-title">部分项目数据要素：</p>
+                    <div class="weather devicedata">
+                        地区天气预告：
+                        <el-row>
+                            <el-col :span="8" class="work">
+                                城市：<span class='tips'>{{weatherData.city}}</span>
+                            </el-col>
+                            <el-col :span="8" class="work">
+                                天气：<span class='tips'>{{weatherData.weather}}</span>
+                            </el-col>
+                            <el-col :span="8" class="work">
+                                风向：<span class='tips'>{{weatherData.winddirection}}</span>
+                            </el-col>
+                            <el-col :span="8" class="work">
+                                温度：<span class='tips'>{{weatherData.temperature}}</span>
+                            </el-col>
+                            <el-col :span="8" class="work">
+                                湿度：<span class='tips'>{{weatherData.humidity}}</span>
+                            </el-col>
+                        </el-row>
+                    </div>
+                    <div class="contant-bottom devicedata">
+                        当前设备：{{deviece}}
+                        <el-row>
+                            <el-col :span="8" class="work">
+                                井内水位：<span class='tips'>正常</span>
+                            </el-col>
+                            <el-col :span="8" class="work">
+                                河道水位：<span class='tips'>正常</span>
+                            </el-col>
+                            <el-col :span="8" class="work">
+                                液压电机：<span class='tips'>正常运行</span>
+                            </el-col>
+                            <el-col :span="8" class="work">
+                                压力电机：<span class='tips'>正常运行</span>
+                            </el-col>
+                            <el-col :span="8" class="work">
+                                闸门运行：<span class='tips'>正常运行</span>
+                            </el-col>
+                            <el-col :span="8" class="work">
+                                监控运行：<span class='tips'>正常运行</span>
+                            </el-col>
+                        </el-row>
+                    </div>
+                    <div class="contant-bottom devicedata">
+                        当前设备：{{deviece}}
+                        <el-row>
+                            <el-col :span="8" class="work">
+                                管道污水流量：<span class='tips'>24.4</span>
+                            </el-col>
+                            <el-col :span="8" class="work">
+                                水泵1：<span class='tips'>停</span>
+                            </el-col>
+                            <el-col :span="8" class="work">
+                                水泵2：<span class='tips'>停</span>
+                            </el-col>
+                            <el-col :span="8" class="work">
+                                水泵电机：<span class='tips'>正常运行</span>
+                            </el-col>
+                            <el-col :span="8" class="work">
+                                排水阀开度：<span class='tips'>正常运行</span>
+                            </el-col>
+                            <el-col :span="8" class="work">
+                                截污阀开度：<span class='tips'>正常运行</span>
+                            </el-col>
+                        </el-row>
+                    </div>
+                    <div class="contant-bottom devicedata">
+                        <div class="process">
+                            <p>截污闸开度</p>
+                            <el-progress :percentage="80" color="#409EFF" ></el-progress>
+                            <p>排水闸开度</p>
+                            <el-progress :percentage="40" color="#409EFF" ></el-progress>
+                        </div>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="7">
+                <div class="player">
+                    <p class="table-title">各地项目监控实况：</p>
+                    <el-row class="contant-top" :gutter="12">
+                        <el-col :span="12" >
+                            <video id="czPlayer" class="myPlayer" poster="" muted controls playsInline webkit-playsinline autoplay style="height: 200px;width: 250px">
+                                <source src="rtmp://rtmp.open.ys7.com/openlive/4134581a2f36441eb3132ba641f9d679" type="" />
+                                <source src="http://hls.open.ys7.com/openlive/4134581a2f36441eb3132ba641f9d679.m3u8" type="application/x-mpegURL" />
+                            </video>
+                        </el-col>
+                        <el-col :span="12" >
+                            <video id="zs1wPlayer" class="myPlayer" poster="" muted controls playsInline webkit-playsinline autoplay style="height: 200px;width: 250px">
+                                <source src="rtmp://rtmp.open.ys7.com/openlive/c308c6c9fb604ed392d9f6d7aa0b2dd4" type="" />
+                                <source src="http://hls.open.ys7.com/openlive/c308c6c9fb604ed392d9f6d7aa0b2dd4.m3u8" type="application/x-mpegURL" />
+                            </video>
+                        </el-col>
+                        <!--<el-col :span="12">-->
+                            <!--<video id="zsPlayer" class="myPlayer" poster="" controls playsInline webkit-playsinline autoplay style="height: 200px;width: 250px">-->
+                                <!--<source src="rtmp://rtmp.open.ys7.com/openlive/87d031b9efce466db47f79a6b29c4e79" type="" />-->
+                                <!--<source style="height: 200px" src="http://hls.open.ys7.com/openlive/87d031b9efce466db47f79a6b29c4e79.m3u8" type="application/x-mpegURL" />-->
+                            <!--</video>-->
+                        <!--</el-col>-->
+                        <el-col :span="12">
+                            <video id="zs2nPlayer" class="myPlayer" poster="" muted controls playsInline webkit-playsinline autoplay style="height: 200px;width: 250px">
+                                <source src="rtmp://rtmp.open.ys7.com/openlive/27a4baca83c3427abd9a71dde435b5df" type="" />
+                                <source style="height: 200px" src="http://hls.open.ys7.com/openlive/27a4baca83c3427abd9a71dde435b5df.m3u8" type="application/x-mpegURL" />
+                            </video>
+                        </el-col>
+                        <el-col :span="12">
+                            <video id="zs2wPlayer" class="myPlayer" poster="" muted controls playsInline webkit-playsinline autoplay style="height: 200px;width: 250px">
+                                <source src="rtmp://rtmp.open.ys7.com/openlive/3e264de324354e07912577436eab8161" type="" />
+                                <source style="height: 200px" src="http://hls.open.ys7.com/openlive/3e264de324354e07912577436eab8161.m3u8" type="application/x-mpegURL" />
+                            </video>
+                        </el-col>
+                        <el-col :span="12">
+                            <video id="zs3nPlayer" class="myPlayer" poster="" muted controls playsInline webkit-playsinline autoplay style="height: 200px;width: 250px">
+                                <source src="rtmp://rtmp.open.ys7.com/openlive/5bceb492a392439bb5b83575eee40db5" type="" />
+                                <source style="height: 200px" src="http://hls.open.ys7.com/openlive/5bceb492a392439bb5b83575eee40db5.m3u8" type="application/x-mpegURL" />
+                            </video>
+                        </el-col>
+                        <el-col :span="12">
+                            <video id="zs3wPlayer" class="myPlayer" poster="" muted controls playsInline webkit-playsinline autoplay style="height: 200px;width: 250px">
+                                <source src="rtmp://rtmp.open.ys7.com/openlive/7b40633cc194479fa6335306178afab0" type="" />
+                                <source style="height: 200px" src="http://hls.open.ys7.com/openlive/7b40633cc194479fa6335306178afab0.m3u8" type="application/x-mpegURL" />
+                            </video>
+                        </el-col>
+                    </el-row>
+                </div>
+                <div :style="{height:'250px',width:'90%',marginTop: '12px'}" ref='myEchartrain'></div>
+                <!--<div :style="{height:'250px',width:'90%',marginTop: '12px'}" ref='myEchartsriver'></div>-->
+            </el-col>
+        </el-row>
+        <footer>
+            <h4>一体化智能截污井系统由高翔水务提供</h4>
+            <p>2018-9-23 专利由高翔水务所有，禁止外泄</p>
+        </footer>
+    </div>
+</template>
+<script>
+import echarts from 'echarts';
+import EZUIPlayer from 'ezuikit';
+import 'echarts/map/js/china.js'; // 引入中国地图数据
+import * as util from '../../assets/js/util.js';
+export default {
+    name: 'echarts',
+    props: ['userJson'],
+    data () {
+        return {
+            nowtime: '',
+            date: new Date(),
+            city: '中山市',
+            chart: null,
+            deviece: '中山1号',
+            weatherData: {},
+            tableData2: [{
+                area: '中山1号',
+                pattern: '自动（晴天截流）',
+                work: '正常'
+            }, {
+                area: '中山2号',
+                pattern: '自动（晴天截流）',
+                work: '正常'
+            }, {
+                area: '中山3号',
+                pattern: '自动（晴天截流）',
+                work: '正常'
+            }, {
+                area: '常州横山桥',
+                pattern: '防倒灌',
+                work: '正常'
+            }, {
+                area: '宁夏跃进桥改造工程',
+                pattern: '',
+                work: '正常'
+            }, {
+                area: '浙江省乐清市大荆镇',
+                pattern: '',
+                work: '正常'
+            }, {
+                area: '广东省汕头市澄海区',
+                pattern: '',
+                work: '正常'
+            }, {
+                area: '宁夏大型灌区',
+                pattern: '',
+                work: '正常'
+            }, {
+                area: '武汉市嘉鱼县余码头村',
+                pattern: '',
+                work: '正常'
+            }, {
+                area: '山西省孝义市五楼庄',
+                pattern: '',
+                work: '正常'
+            }, {
+                area: '湖南省长沙县',
+                pattern: '',
+                work: '正常'
+            }, {
+                area: '徐州市郑集站',
+                pattern: '',
+                work: '正常'
+            }, {
+                area: '广西卫生职业技术学院',
+                pattern: '',
+                work: '正常'
+            }, {
+                area: '钟山区钟山大道中段564',
+                pattern: '',
+                work: '正常'
+            }, {
+                area: '南京市雨花台区凤台南路',
+                pattern: '',
+                work: '正常'
+            }, {
+                area: '广东省清远市远澜水河黑臭水体整治',
+                pattern: '',
+                work: '正常'
+            }, {
+                area: '江西省赣州市宁都县龙溪湾壹号小区北',
+                pattern: '',
+                work: '正常'
+            }, {
+                area: '盐城市盐都区',
+                pattern: '',
+                work: '正常'
+            }, {
+                area: '盐城中小企业创业园鹿鸣路北',
+                pattern: '',
+                work: '正常'
+            }, {
+                area: '武汉市洪山区青菱街道新港村',
+                pattern: '',
+                work: '正常'
+            }, {
+                area: '郑州市中原区冯湾小学',
+                pattern: '',
+                work: '正常'
+            }, {
+                area: '赣州市寻乌县',
+                pattern: '',
+                work: '正常'
+            }, {
+                area: '新沂市胜利干渠综合治理工程',
+                pattern: '',
+                work: '正常'
+            }, {
+                area: '四川省成都市双流县华阳镇老南干渠移动公司段改线工程横拉闸门',
+                pattern: '',
+                work: '正常'
+            }, {
+                area: '涟水县五岛湖水环境治理工程公园闸下卧式闸门液压启闭机',
+                pattern: '',
+                work: '正常'
+            }, {
+                area: '赣榆县青口河漫水闸拆建工程',
+                pattern: '',
+                work: '正常'
+            }, {
+                area: '安徽省阜阳市茨河浦枢纽船闸液压启闭机',
+                pattern: '',
+                work: '正常'
+            }, {
+                area: '宁夏盐环定泵站进水闸液压闸门',
+                pattern: '',
+                work: '正常'
+            }, {
+                area: '湖北省嘉鱼县余码头电力排灌站液压启闭机',
+                pattern: '',
+                work: '正常'
+            }, {
+                area: '无锡市金城湾公园张湾里液压卧倒门',
+                pattern: '',
+                work: '正常'
+            }, {
+                area: '上海市闵行区水闸管理所',
+                pattern: '',
+                work: '正常'
+            }, {
+                area: '睢宁县黄河东闸除险加固工程',
+                pattern: '',
+                work: '正常'
+            }, {
+                area: '余杭崇贤南部河道整治四期工程',
+                pattern: '',
+                work: '正常'
+            }, {
+                area: '海安县章郭北闸',
+                pattern: '',
+                work: '正常'
+            }, {
+                area: '嘉善汾玉村创业河生态调水',
+                pattern: '',
+                work: '正常'
+            }, {
+                area: '海安县禾凤闸',
+                pattern: '',
+                work: '正常'
+            }, {
+                area: '海安县立公闸',
+                pattern: '',
+                work: '正常'
+            }],
+            geoCoordMap: {
+                '高翔水务': [119.736684, 32.777733],
+                '中山1号': [113.36752, 22.494457],
+                '中山2号': [113.36772, 22.49447],
+                '中山3号': [113.368, 22.491938],
+                '常州横山桥': [120.1215057, 31.7588482],
+                '宁夏跃进桥改造工程': [106.299006, 37.891727],
+                '浙江省乐清市大荆镇': [121.167257, 28.403249],
+                '广东省汕头市澄海区': [116.793366, 23.465049],
+                '宁夏大型灌区': [106.129892, 38.191623],
+                '武汉市嘉鱼县余码头村': [114.078704, 30.06129],
+                '山西省孝义市五楼庄': [111.890403, 37.090412],
+                '湖南省长沙县': [113.089998, 28.268236],
+                '徐州市郑集站': [117.067021, 34.430359],
+                '广西卫生职业技术学院(昆仑大道8号)': [117.067021, 34.430359],
+                '水钢医院(钟山区钟山大道中段564)': [117.067021, 34.430359],
+                '南京市雨花台区凤台南路': [118.761188, 32.004547],
+                '广东省清远市远澜水河黑臭水体整治': [113.069844, 23.68411],
+                '江西省赣州市宁都县龙溪湾壹号小区北': [116.020434, 26.486607],
+                '江苏兴宇钢材市场(盐城市盐都区)': [120.079969, 33.308107],
+                '盐城中小企业创业园鹿鸣路北': [120.081374, 33.328426],
+                '武汉市洪山区青菱街道新港村': [114.289531, 30.468002],
+                '郑州市中原区冯湾小学': [113.584831, 34.750396],
+                '赣州市寻乌县': [115.648449, 24.976042],
+                '新沂市胜利干渠综合治理工程': [118.093003, 34.205249],
+                '四川省成都市双流县华阳镇老南干渠移动公司段改线工程横拉闸门': [104.062961, 30.505987],
+                '涟水县五岛湖水环境治理工程公园闸下卧式闸门液压启闭机': [119.268996, 33.774779],
+                '赣榆县青口河漫水闸拆建工程': [119.171406, 34.82869],
+                '安徽省阜阳市茨河浦枢纽船闸液压启闭机': [115.7861, 33.028716],
+                '宁夏盐环定泵站进水闸液压闸门': [106.221235, 37.979719],
+                '湖北省嘉鱼县余码头电力排灌站液压启闭机': [120.299773, 31.526731],
+                '无锡市金城湾公园张湾里液压卧倒门': [114.067449, 30.049258],
+                '上海市闵行区水闸管理所': [121.383411, 31.111296],
+                '启东市吕四渔港船闸管理所船闸启闭机': [121.603279, 32.077358],
+                '石嘴山市沙湖与星海湖水系连通综合整治工程': [121.603279, 32.077358],
+                '海安县章郭北闸': [120.357477, 32.542601],
+                '嘉善汾玉村创业河生态调水': [120.792971, 30.967696],
+                '睢宁县黄河东闸除险加固工程': [117.963494, 34.072145],
+                '余杭崇贤南部河道整治四期工程': [120.181383, 30.393324]
+            },
+            data: [
+                {name: '中山1号', value: ['正常', '中山市']},
+                {name: '中山2号', value: ['正常', '中山市']},
+                {name: '中山3号', value: ['正常', '中山市']},
+                {name: '常州横山桥', value: ['正常', '常州市']},
+                {name: '宁夏跃进桥改造工程', value: ['正常', '吴忠市']},
+                {name: '浙江省乐清市大荆镇', value: ['正常', '乐清市']},
+                {name: '广东省汕头市澄海区', value: ['正常', '汕头市']},
+                {name: '宁夏大型灌区', value: ['正常', '银川市']},
+                {name: '武汉市嘉鱼县余码头村', value: ['正常', '武汉市']},
+                {name: '山西省孝义市五楼庄', value: ['正常', '孝义市']},
+                {name: '湖南省长沙县', value: ['正常', '长沙市']},
+                {name: '徐州市郑集站', value: ['正常', '徐州市']},
+                {name: '广西卫生职业技术学院(昆仑大道8号)', value: ['正常', '兴宁区']},
+                {name: '水钢医院(钟山区钟山大道中段564)', value: ['正常', '钟山区']},
+                {name: '南京市雨花台区凤台南路', value: ['正常', '雨花台区']},
+                {name: '广东省清远市清城区人民一路8号', value: ['正常', '清城区']},
+                {name: '江西省赣州市宁都县龙溪湾壹号小区北', value: ['正常', '赣州市']},
+                {name: '江苏兴宇钢材市场(盐城市盐都区)', value: ['正常', '盐都区']},
+                {name: '盐城中小企业创业园鹿鸣路北', value: ['正常', '盐都区']},
+                {name: '武汉市洪山区青菱街道新港村', value: ['正常', '洪山区']},
+                {name: '郑州市中原区冯湾小学', value: ['正常', '中原区']},
+                {name: '赣州市寻乌县', value: ['正常', '赣州市']}
+            ],
+            newdata: [
+                [{name: '高翔水务'}, {name: '中山1号', value: ['正常', '中山市']}],
+                [{name: '高翔水务'}, {name: '中山2号', value: ['正常', '中山市']}],
+                [{name: '高翔水务'}, {name: '中山3号', value: ['正常', '中山市']}],
+                [{name: '高翔水务'}, {name: '常州横山桥', value: ['正常', '常州市']}],
+                [{name: '高翔水务'}, {name: '宁夏跃进桥改造工程', value: ['正常', '吴忠市']}],
+                [{name: '高翔水务'}, {name: '浙江省乐清市大荆镇', value: ['正常', '乐清市']}],
+                [{name: '高翔水务'}, {name: '广东省汕头市澄海区', value: ['正常', '汕头市']}],
+                [{name: '高翔水务'}, {name: '宁夏大型灌区', value: ['正常', '银川市']}],
+                [{name: '高翔水务'}, {name: '武汉市嘉鱼县余码头村', value: ['正常', '武汉市']}],
+                [{name: '高翔水务'}, {name: '山西省孝义市五楼庄', value: ['正常', '孝义市']}],
+                [{name: '高翔水务'}, {name: '湖南省长沙县', value: ['正常', '长沙市']}],
+                [{name: '高翔水务'}, {name: '徐州市郑集站', value: ['正常', '徐州市']}],
+                [{name: '高翔水务'}, {name: '广西卫生职业技术学院(昆仑大道8号)', value: ['正常', '兴宁区']}],
+                [{name: '高翔水务'}, {name: '水钢医院(钟山区钟山大道中段564)', value: ['正常', '钟山区']}],
+                [{name: '高翔水务'}, {name: '南京市雨花台区凤台南路', value: ['正常', '雨花台区']}],
+                [{name: '高翔水务'}, {name: '广东省清远市远澜水河黑臭水体整治', value: ['正常', '清远市']}],
+                [{name: '高翔水务'}, {name: '江西省赣州市宁都县龙溪湾壹号小区北', value: ['正常', '赣州市']}],
+                [{name: '高翔水务'}, {name: '江苏兴宇钢材市场(盐城市盐都区)', value: ['正常', '盐都区']}],
+                [{name: '高翔水务'}, {name: '盐城中小企业创业园鹿鸣路北', value: ['正常', '盐都区']}],
+                [{name: '高翔水务'}, {name: '武汉市洪山区青菱街道新港村', value: ['正常', '洪山区']}],
+                [{name: '高翔水务'}, {name: '郑州市中原区冯湾小学', value: ['正常', '中原区']}],
+                [{name: '高翔水务'}, {name: '赣州市寻乌县', value: ['正常', '赣州市']}],
+                [{name: '高翔水务'}, {name: '新沂市胜利干渠综合治理工程', value: ['正常', '新沂市']}],
+                [{name: '高翔水务'}, {name: '四川省成都市双流县华阳镇老南干渠移动公司段改线工程横拉闸门', value: ['正常', '成都市']}],
+                [{name: '高翔水务'}, {name: '涟水县五岛湖水环境治理工程公园闸下卧式闸门液压启闭机', value: ['正常', '淮安市']}],
+                [{name: '高翔水务'}, {name: '赣榆县青口河漫水闸拆建工程', value: ['正常', '连云港市']}],
+                [{name: '高翔水务'}, {name: '安徽省阜阳市茨河浦枢纽船闸液压启闭机', value: ['正常', '阜阳市']}],
+                [{name: '高翔水务'}, {name: '宁夏盐环定泵站进水闸液压闸门', value: ['正常', '吴忠市']}],
+                [{name: '高翔水务'}, {name: '湖北省嘉鱼县余码头电力排灌站液压启闭机', value: ['正常', '咸宁市']}],
+                [{name: '高翔水务'}, {name: '无锡市金城湾公园张湾里液压卧倒门', value: ['正常', '无锡市']}],
+                [{name: '高翔水务'}, {name: '上海市闵行区水闸管理所', value: ['正常', '上海市']}],
+                [{name: '高翔水务'}, {name: '启东市吕四渔港船闸管理所船闸启闭机', value: ['正常', '启东市']}],
+                [{name: '高翔水务'}, {name: '石嘴山市沙湖与星海湖水系连通综合整治工程', value: ['正常', '石嘴山市']}],
+                [{name: '高翔水务'}, {name: '海安县章郭北闸', value: ['正常', '海安市']}],
+                [{name: '高翔水务'}, {name: '嘉善汾玉村创业河生态调水', value: ['正常', '嘉兴市']}],
+                [{name: '高翔水务'}, {name: '睢宁县黄河东闸除险加固工程', value: ['正常', '徐州市']}],
+                [{name: '高翔水务'}, {name: '余杭崇贤南部河道整治四期工程', value: ['正常', '杭州市']}]
+            ]
+        };
+    },
+    filters: {
+        formatDate: function (value) {
+            var date = new Date(value);
+            function padDate (value) {
+                return value < 10 ? '0' + value : value;
+            };
+            var year = date.getFullYear();
+            var month = padDate(date.getMonth() + 1);
+            var day = padDate(date.getDate());
+            var hours = padDate(date.getHours());
+            var minutes = padDate(date.getMinutes());
+            var seconds = padDate(date.getSeconds());
+            return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+        }
+    },
+    created () {
+        this.getweateher();
+        this.nowtime = util.dateFormat();
+    },
+    mounted () {
+        this.chinaConfigure();
+        this.drawchart();
+        this.drawchartss();
+        // this.drawchartriver();
+        this.drawchartcod();
+        this.drawchartrain();
+        var playercz = new EZUIPlayer('czPlayer');
+        // var playerzs = new EZUIPlayer('zsPlayer');
+        var zs2nPlayer = new EZUIPlayer('zs2nPlayer');
+        var zs1wPlayer = new EZUIPlayer('zs1wPlayer');
+        var zs2wPlayer = new EZUIPlayer('zs2wPlayer');
+        var zs3nPlayer = new EZUIPlayer('zs3nPlayer');
+        var zs3wPlayer = new EZUIPlayer('zs3wPlayer');
+        // playerzs.play();
+        playercz.pause();
+        zs2wPlayer.pause();
+        zs3wPlayer.pause();
+        zs3nPlayer.pause();
+        zs2nPlayer.pause();
+        zs1wPlayer.pause();
+        setTimeout(function () {
+            playercz.play();
+            zs2wPlayer.play();
+            zs3wPlayer.play();
+            zs3nPlayer.play();
+            zs2nPlayer.play();
+            zs1wPlayer.play();
+        }, 150);
+        var _this = this; // 声明一个变量指向Vue实例this，保证作用域一致
+        this.timer = setInterval(function () {
+            _this.date = new Date(); // 修改数据date
+        }, 1000);
+    },
+    beforeDestroy () {
+        if (!this.chart) {
+            return;
+        }
+        this.chart.dispose();
+        this.chart = null;
+    },
+    methods: {
+        getweateher (val) {
+            const that = this;
+            if (val) {
+                that.$http.get(`https://restapi.amap.com/v3/weather/weatherInfo?city=${val}&key=ca93fd1bba17c4f1bb75556ab4ef5a3f`)
+                    .then(function (response) {
+                        that.weatherData = response.data.lives[0];
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            } else {
+                that.$http.get(`https://restapi.amap.com/v3/weather/weatherInfo?city=${that.city}&key=ca93fd1bba17c4f1bb75556ab4ef5a3f`)
+                    .then(function (response) {
+                        that.weatherData = response.data.lives[0];
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
+        },
+        tableRowClassName ({row, rowIndex}) {
+            if (rowIndex % 2 === 1) {
+                return 'blue-row';
+            } else {
+                return 'bg-row';
+            }
+        },
+        onPlayerPlay (player) {
+            alert('1');
+        },
+        onPlayerPause (player) {
+            alert('pause');
+        },
+        convertData (data) {
+            let that = this;
+            var res = [];
+            for (var i = 0; i < data.length; i++) {
+                var geoCoord = that.geoCoordMap[data[i].name];
+                if (geoCoord) {
+                    res.push({
+                        name: data[i].name,
+                        value: geoCoord.concat(data[i].value)
+                    });
+                }
+            }
+            return res;
+        },
+        newconvertData (data) {
+            const that = this;
+            var res = [];
+            for (var i = 0; i < data.length; i++) {
+                var dataItem = data[i];
+                var fromCoord = that.geoCoordMap[dataItem[0].name];
+                var toCoord = that.geoCoordMap[dataItem[1].name];
+                if (fromCoord && toCoord) {
+                    res.push({
+                        fromName: dataItem[0].name,
+                        toName: dataItem[1].name,
+                        coords: [fromCoord, toCoord]
+                    });
+                }
+            }
+            return res;
+        },
+        chinaConfigure () {
+            let that = this;
+            let myChart = echarts.init(this.$refs.myEchart); // 这里是为了获得容器所在位置
+            window.onresize = myChart.resize;
+            var series = [];
+            [['高翔水务', that.newdata]].forEach(function (item, i) {
+                series.push({
+                    name: item[0],
+                    type: 'lines',
+                    zlevel: 1,
+                    effect: {
+                        show: true,
+                        period: 6,
+                        trailLength: 0.7,
+                        color: '#fff',
+                        symbolSize: 3
+                    },
+                    lineStyle: {
+                        normal: {
+                            color: '#a6c84c',
+                            width: 0,
+                            curveness: 0.2
+                        }
+                    },
+                    data: that.newconvertData(item[1])
+                },
+                {
+                    name: item[0] + ' Top10',
+                    type: 'lines',
+                    zlevel: 2,
+                    symbol: ['none', 'arrow'],
+                    symbolSize: 10,
+                    effect: {
+                        show: true,
+                        period: 6,
+                        trailLength: 0,
+                        symbolSize: 8
+                    },
+                    lineStyle: {
+                        normal: {
+                            color: '#b43b62',
+                            width: 2,
+                            opacity: 0.6,
+                            curveness: 0.2
+                        }
+                    },
+                    data: that.newconvertData(item[1])
+                }, {
+                    type: 'effectScatter',
+                    coordinateSystem: 'geo',
+                    zlevel: 2,
+                    // 波纹效果
+                    rippleEffect: {
+                        period: 2,
+                        brushType: 'stroke',
+                        scale: 3
+                    },
+                    // 终点形象
+                    symbol: 'circle',
+                    // 圆点大小
+                    symbolSize: function (val) {
+                        return 8;
+                    },
+                    itemStyle: {
+                        normal: {
+                            show: true
+                        }
+                    },
+                    data: item[1].map(function (dataItem) {
+                        return {
+                            name: dataItem[1].name,
+                            value: that.geoCoordMap[dataItem[1].name].concat([dataItem[1].value[0]]).concat([dataItem[1].value[1]])
+                        };
+                    })
+                });
+            });
+            myChart.setOption({ // 进行相关配置
+                backgroundColor: '-webkit-gradient(radial, center center, 0, center center, 220, from(orange), to(red));',
+                title: {
+                    text: 'GIS地理位置实况',
+                    subtext: '内部使用禁止发布',
+                    sublink: 'http://39.107.105.1:4396/',
+                    left: 'center',
+                    textStyle: {
+                        color: '#ccc'
+                    }
+                },
+                tooltip: {
+                    trigger: 'item',
+                    formatter: function (params) {
+                        return params.name + ' : ' + params.value[2];
+                    }
+                },
+                geo: { // 这个是重点配置区
+                    map: 'china', // 表示中国地图
+                    roam: true,
+                    scaleLimit: {
+                        min: 1
+                    },
+                    label: {
+                        normal: {
+                            show: false, // 是否显示对应地名
+                            textStyle: {
+                                color: '#ccc'
+                            }
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            borderColor: '#63E7F5',
+                            areaColor: '#0E2295', // 背景颜色
+                            color: 'white',
+                            shadowBlur: 50,
+                            label: {
+                                show: true // 显示名称
+                            }
+                        },
+                        emphasis: {
+                            areaColor: '#fff',
+                            color: '#ccc',
+                            borderWidth: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                },
+                series: series
+                // series: [
+                //     {
+                //         name: '销量',
+                //         type: 'scatter',
+                //         coordinateSystem: 'geo', // 对应上方配置
+                //         data: that.convertData(that.data)
+                //     },
+                //     {
+                //         name: '重点区域',
+                //         type: 'effectScatter',
+                //         coordinateSystem: 'geo',
+                //         data: that.convertData(that.data),
+                //         symbolSize: function (val) {
+                //             return val[2] / 10;
+                //         },
+                //         showEffectOn: 'render',
+                //         rippleEffect: {
+                //             brushType: 'stroke'
+                //         },
+                //         hoverAnimation: true,
+                //         label: {
+                //             normal: {
+                //                 formatter: '{b}',
+                //                 position: 'right',
+                //                 show: false
+                //             }
+                //         },
+                //         itemStyle: {
+                //             normal: {
+                //                 color: '#f4e925',
+                //                 shadowBlur: 10,
+                //                 shadowColor: '#333'
+                //             }
+                //         },
+                //         zlevel: 1
+                //     }
+                // ]
+            });
+            myChart.on('click', function (params) {
+                console.log(params);
+                that.getweateher(params.data.value[3]);
+                if (params.data.name === '中山1号' || params.data.name === '中山1号' || params.data.name === '中山2号' || params.data.name === '中山3号' || params.data.name === '常州横山桥') {
+                    that.deviece = params.data.name;
+                }
+            });
+        },
+        drawchart: function () {
+            let that = this;
+            let myChart = echarts.init(that.$refs.myEcharts); // 这里是为了获得容器所在位置
+            window.onresize = myChart.resize;
+            var base = +new Date(2018, 7, 3);
+            var oneDay = 24 * 3600 * 1000;
+            var date = [];
+            var data = [Math.random() * 100];
+            for (var i = 1; i < 80; i++) {
+                var now = new Date(base += oneDay);
+                date.push([now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'));
+                data.push(Math.round((Math.random() + 0.5) * 80));
+            }
+            var option = {
+                tooltip: {
+                    trigger: 'axis',
+                    position: function (pt) {
+                        return [pt[0], '10%'];
+                    }
+                },
+                title: {
+                    left: 'center',
+                    text: '井内水位历史记录',
+                    textStyle: {
+                        color: '#ccc'
+                    }
+                },
+                toolbox: {
+                    feature: {
+                        dataZoom: {
+                            yAxisIndex: 'none'
+                        },
+                        restore: {},
+                        saveAsImage: {}
+                    }
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: date,
+                    axisLabel: {
+                        show: true,
+                        textStyle: {
+                            color: '#fff'
+                        }
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    boundaryGap: [0, '100%'],
+                    axisLabel: {
+                        show: true,
+                        textStyle: {
+                            color: '#fff'
+                        }
+                    }
+                },
+                series: [
+                    {
+                        name: '模拟数据',
+                        type: 'line',
+                        smooth: true,
+                        symbol: ['none', 'arrow'],
+                        sampling: 'average',
+                        effect: {
+                            show: true,
+                            period: 6,
+                            trailLength: 0.7,
+                            color: '#fff',
+                            symbolSize: 3
+                        },
+                        lineStyle: {
+                            normal: {
+                                color: '#ffa022',
+                                width: 0,
+                                curveness: 0.2
+                            }
+                        },
+                        itemStyle: {
+                            color: 'rgb(255, 70, 131)',
+                            lineStyle: {
+                                color: '#ff0000'
+                            }
+                        },
+                        areaStyle: {normal: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                offset: 0,
+                                color: 'rgb(255, 158, 68)'
+                            }, {
+                                offset: 1,
+                                color: 'rgb(255, 70, 131)'
+                            }])}
+                        },
+                        data: data
+                    }
+                ]
+            };
+            myChart.setOption(option, true);
+        },
+        drawchartriver: function () {
+            let that = this;
+            let myChart = echarts.init(that.$refs.myEchartsriver); // 这里是为了获得容器所在位置
+            window.onresize = myChart.resize;
+            var base = +new Date(2018, 7, 3);
+            var oneDay = 24 * 3600 * 1000;
+            var date = [];
+            var data = [Math.random() * 100];
+            for (var i = 1; i < 80; i++) {
+                var now = new Date(base += oneDay);
+                date.push([now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'));
+                data.push(Math.round((Math.random() + 0.5) * 80));
+            }
+            var option = {
+                tooltip: {
+                    trigger: 'axis',
+                    position: function (pt) {
+                        return [pt[0], '10%'];
+                    }
+                },
+                title: {
+                    left: 'center',
+                    text: '河道水位历史记录',
+                    textStyle: {
+                        color: '#ccc'
+                    }
+                },
+                toolbox: {
+                    feature: {
+                        dataZoom: {
+                            yAxisIndex: 'none'
+                        },
+                        restore: {},
+                        saveAsImage: {}
+                    }
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: date,
+                    axisLabel: {
+                        show: true,
+                        textStyle: {
+                            color: '#fff'
+                        }
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    boundaryGap: [0, '100%'],
+                    axisLabel: {
+                        show: true,
+                        textStyle: {
+                            color: '#fff'
+                        }
+                    }
+                },
+                series: [
+                    {
+                        name: '模拟数据',
+                        type: 'line',
+                        smooth: true,
+                        symbol: 'none',
+                        sampling: 'average',
+                        itemStyle: {
+                            color: 'rgb(255, 70, 131)',
+                            lineStyle: {
+                                color: '#ff0000'
+                            }
+                        },
+                        areaStyle: {normal: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                offset: 0,
+                                color: 'rgb(255, 158, 68)'
+                            }, {
+                                offset: 1,
+                                color: 'rgb(255, 70, 131)'
+                            }])}
+                        },
+                        data: data
+                    }
+                ]
+            };
+            myChart.setOption(option, true);
+        },
+        drawchartss: function () {
+            let that = this;
+            let myChart = echarts.init(that.$refs.myEchartss); // 这里是为了获得容器所在位置
+            window.onresize = myChart.resize;
+            var base = +new Date(2018, 7, 3);
+            var oneDay = 24 * 3600 * 1000;
+            var date = [];
+            var data = [Math.random() * 300];
+            for (var i = 1; i < 80; i++) {
+                var now = new Date(base += oneDay);
+                date.push([now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'));
+                data.push(Math.round((Math.random() + 2) * 200));
+            }
+            var option = {
+                tooltip: {
+                    trigger: 'axis',
+                    position: function (pt) {
+                        return [pt[0], '10%'];
+                    }
+                },
+                title: {
+                    left: 'center',
+                    text: '水质SS历史记录',
+                    textStyle: {
+                        color: '#ccc'
+                    }
+                },
+                toolbox: {
+                    feature: {
+                        dataZoom: {
+                            yAxisIndex: 'none'
+                        },
+                        restore: {},
+                        saveAsImage: {}
+                    }
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: date,
+                    axisLabel: {
+                        show: true,
+                        textStyle: {
+                            color: '#fff'
+                        }
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    boundaryGap: [0, '100%'],
+                    axisLabel: {
+                        show: true,
+                        textStyle: {
+                            color: '#fff'
+                        }
+                    }
+                },
+                series: [
+                    {
+                        name: '模拟数据',
+                        type: 'line',
+                        smooth: true,
+                        symbol: 'none',
+                        sampling: 'average',
+                        itemStyle: {
+                            color: 'rgb(255, 70, 131)',
+                            lineStyle: {
+                                color: '#ff0000'
+                            }
+                        },
+                        areaStyle: {normal: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                offset: 0,
+                                color: 'rgb(255, 158, 68)'
+                            }, {
+                                offset: 1,
+                                color: 'rgb(255, 70, 131)'
+                            }])}
+                        },
+                        data: data
+                    }
+                ]
+            };
+            myChart.setOption(option, true);
+        },
+        drawchartcod: function () {
+            let that = this;
+            let myChart = echarts.init(that.$refs.myEchartcod); // 这里是为了获得容器所在位置
+            window.onresize = myChart.resize;
+            var base = +new Date(2018, 7, 3);
+            var oneDay = 24 * 3600 * 1000;
+            var date = [];
+            var data = [Math.random() * 50];
+            for (var i = 1; i < 80; i++) {
+                var now = new Date(base += oneDay);
+                date.push([now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'));
+                data.push(Math.round((Math.random()) * 30));
+            }
+            var option = {
+                tooltip: {
+                    trigger: 'axis',
+                    position: function (pt) {
+                        return [pt[0], '10%'];
+                    }
+                },
+                title: {
+                    left: 'center',
+                    text: '水质COD历史记录',
+                    textStyle: {
+                        color: '#ccc'
+                    }
+                },
+                toolbox: {
+                    feature: {
+                        dataZoom: {
+                            yAxisIndex: 'none'
+                        },
+                        restore: {},
+                        saveAsImage: {}
+                    }
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: date,
+                    axisLabel: {
+                        show: true,
+                        textStyle: {
+                            color: '#fff'
+                        }
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    boundaryGap: [0, '100%'],
+                    axisLabel: {
+                        show: true,
+                        textStyle: {
+                            color: '#fff'
+                        }
+                    }
+                },
+                series: [
+                    {
+                        name: '模拟数据',
+                        type: 'line',
+                        smooth: true,
+                        symbol: 'none',
+                        sampling: 'average',
+                        itemStyle: {
+                            color: 'rgb(255, 70, 131)',
+                            lineStyle: {
+                                color: '#ff0000'
+                            }
+                        },
+                        areaStyle: {normal: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                offset: 0,
+                                color: 'rgb(255, 158, 68)'
+                            }, {
+                                offset: 1,
+                                color: 'rgb(255, 70, 131)'
+                            }])}
+                        },
+                        data: data
+                    }
+                ]
+            };
+            myChart.setOption(option, true);
+        },
+        drawchartrain: function () {
+            let that = this;
+            let myChart = echarts.init(that.$refs.myEchartrain); // 这里是为了获得容器所在位置
+            window.onresize = myChart.resize;
+            var base = +new Date(2018, 7, 3);
+            var oneDay = 24 * 3600 * 1000;
+            var date = [];
+            var data = [0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 17, 0,
+                0, 0, 0, 6, 0, 0, 0, 0, 0, 10, 4, 0, 0, 0, 0, 0, 0,
+                0, 0, 6, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0,
+                0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 2, 0, 15, 0, 0, 16, 0,
+                0, 2, 0, 0, 0, 16, 0, 0, 0, 0, 0, 0, 16, 0, 0, 0, 0,
+                0, 0, 6, 0, 0];
+            for (var i = 1; i < 80; i++) {
+                var now = new Date(base += oneDay);
+                date.push([now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'));
+            }
+            var option = {
+                tooltip: {
+                    trigger: 'axis',
+                    position: function (pt) {
+                        return [pt[0], '10%'];
+                    }
+                },
+                title: {
+                    left: 'center',
+                    text: '雨量历史记录',
+                    textStyle: {
+                        color: '#ccc'
+                    }
+                },
+                toolbox: {
+                    feature: {
+                        dataZoom: {
+                            yAxisIndex: 'none'
+                        },
+                        restore: {},
+                        saveAsImage: {}
+                    }
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: date,
+                    axisLabel: {
+                        show: true,
+                        textStyle: {
+                            color: '#fff'
+                        }
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    boundaryGap: [0, '100%'],
+                    axisLabel: {
+                        show: true,
+                        textStyle: {
+                            color: '#fff'
+                        }
+                    }
+                },
+                series: [
+                    {
+                        name: '模拟数据',
+                        type: 'line',
+                        smooth: true,
+                        symbol: 'none',
+                        sampling: 'average',
+                        itemStyle: {
+                            color: 'rgb(255, 70, 131)',
+                            lineStyle: {
+                                color: '#ff0000'
+                            }
+                        },
+                        areaStyle: {normal: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                offset: 0,
+                                color: 'rgb(255, 158, 68)'
+                            }, {
+                                offset: 1,
+                                color: 'rgb(255, 70, 131)'
+                            }])}
+                        },
+                        data: data
+                    }
+                ]
+            };
+            myChart.setOption(option, true);
+        }
+    }
+};
+</script>
+
+<style scoped>
+    video{height: 200px}
+    .echarts{
+        background: #050D20;
+    }
+    .contant{
+        margin: 26px 22px 22px 22px;
+    }
+    .contant-top{
+        margin: 0px 22px 22px 22px;
+    }
+    .time{
+        text-shadow: 0 0 5px #00c6ff;
+        vertical-align: center;
+        color: #3ea5f1;
+        font-size: 26px;
+        padding-top: 20px;
+        line-height: 68px;
+        height: 68px;
+        text-indent: 28px;
+    }
+    #title{
+        text-align: center;
+        margin: 0 auto;
+        color: #fff;
+        padding-top: 28px;
+        letter-spacing: 6px;
+        font-size: 32px;
+    }
+    .el-table .warning-row {
+        background: oldlace;
+    }
+    .table-title{
+        color: #91D9EB;
+        background: #0F1D3F;
+        display: inline-block;
+        padding: 6px;
+        margin-bottom: 8px;
+    }
+    .myPlayer{
+        width: 80%;
+        height: 400px;
+        margin: 20px auto;
+    }
+    #czPlayer{
+        margin: 20px auto;
+    }
+    #zsPlayer{
+        margin: 20px auto;
+    }
+    .el-table .success-row {
+        background: #f0f9eb;
+    }
+    .el-table th {
+        background-color: black !important;
+        color: white;
+    }
+    .weather{
+        color: #fff;
+    }
+    .process p{
+        color: #ccc;
+        padding: 14px 0;
+    }
+    .contant-bottom{
+        margin-top: 36px;
+        color: #fff;
+    }
+    .contant-bottom .work{
+        margin-top: 24px;
+    }
+    .contant-bottom .tips{
+        color: greenyellow;
+    }
+    .contant-top .el-col{
+        margin-top: 12px;
+    }
+    footer{
+        color: #fff;
+        border-top:2px solid #6f6d6d ;
+    }
+    footer p{
+        text-align: center;
+        margin-top: 10px;
+        padding-bottom: 20px;
+        font-size: 16px;
+    }
+    footer h4{
+        margin-top: 8px;
+        text-align: center;
+    }
+    .devicedata{
+        margin-top: 28px;
+        border: 1px solid blue;
+        border-radius: 8px;
+        padding: 14px 0px 14px 14px;
+        margin-right: 8px;
+        box-shadow: 1px 1px 20px 2px #4876FF inset;
+    }
+    .devicedata:nth-child(2){
+        margin-top: 0px;
+    }
+</style>

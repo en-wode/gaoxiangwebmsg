@@ -1,0 +1,73 @@
+/*头部样式*/
+
+
+/*登录界面主色调*/
+.login-wrap {
+    background: black;
+}
+
+/*左列表样式*/
+.sidebar{
+    background: #101010;
+    box-shadow: 0 11px 12px 6px #cad4dc;
+    display: block;
+    position: absolute;
+    width: 250px;
+    left: 0;
+    top: 68px;
+    bottom:0;
+}
+.el-menu{
+    color: black;
+}
+.el-menu li {
+    list-style: none;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    border-bottom: 1px solid #615c5c;
+}
+.el-menu-item{
+    color: #fff!important;
+}
+.el-menu-item.is-active{
+    color: #ffffff!important;
+}
+/*左列表字体样式*/
+.el-submenu .el-menu {
+    background-color: rgb(74, 74, 74);
+}
+.el-menu-item{font-size: 12px!important;}
+.el-submenu .el-menu-item{
+    height: 42px!important;
+    line-height: 42px!important;
+    text-align: left;
+}
+.el-submenu .el-menu .is-active{
+    color: white;
+    background-color: #6f6d6d;
+}
+.el-submenu__title{
+    list-style: none;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    color: #fff!important;
+}
+
+.el-submenu.is-active .el-submenu__title{
+    color: white!important;
+    background-color: #2b2929;
+    border-bottom: 2px solid #efcfcf;
+}
+.is-active .el-submenu__title i{
+    color: #fff;
+}
+/*弹出框头部色彩*/
+.el-dialog__title{
+    color: white!important;
+}
+.el-dialog__header{
+    background: #3ea5f1;
+}
+

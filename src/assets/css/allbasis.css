@@ -1,0 +1,156 @@
+/*个人中心*/
+.crumbs {
+  padding: 16px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background: white;
+}
+
+.crumbs h3{
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.crumbs p {
+  font-size: 12px;
+}
+.ms-doc {
+  margin-top: 20px;
+}
+.rectify {
+  padding-left: 20px;
+}
+.gtasks_list .ft-red {
+  font-size: 20px;
+}
+.ms-doc .el-checkbox__input.is-disabled+.el-checkbox__label{
+  color: #333;
+  cursor: pointer;
+}
+.ms-doc .el-checkbox {
+  padding: 12px 0 12px 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.el-checkbox+.el-checkbox{
+  margin-left: 0px!important;
+}
+.gtasks_list .func{
+  display: inline-block;
+  height: 80px;
+  width: 60%;
+  text-align: center;
+  color: white;
+}
+.gtasks_list .func .nav_first{
+  margin-top: 12px;
+  width: 100%;
+  display: inline-block;
+  font-size: 12px;
+  color: #f89999;
+}
+.gtasks_list .func .nav_second{
+  margin-top: 6px;
+  width: 100%;
+  display: inline-block;
+  font-size: 16px;
+}
+.ability{
+  min-width: 700px
+}
+.ability .el-col{
+  background: #f34040;
+  border-radius: 8px;
+  box-shadow: 0px 3px 5px 0px #d65c5c;
+}
+.ability .el-row {
+  padding-top: 40px;
+}
+.gtasks_list .el-col {
+  margin-left: 20px;
+}
+
+.gtasks_list ul li{
+  height: 40px;
+  line-height: 40px;
+  padding: 0 23px;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.gtasks_list ul li:nth-child(2n-1){background-color: #f2f2f2}
+
+/*面包屑*/
+.el-breadcrumb{
+  height: 32px;
+  font-size: 18px!important;
+  border-bottom: 2px solid #c7c7c7;
+  margin-bottom: 24px;
+}
+
+/*日历*/
+.calend{
+  margin: 20px 0 0 14px;
+  display: inline-block;
+  width: 96%;
+  min-width: 400px;
+  position: relative;
+}
+/*书籍封面基础共同样式*/
+.bookcover{
+  min-width: 1024px;
+}
+.bookcover .ms-doc h3{
+  border-bottom: 1px solid #d9d9d9;
+  background-color: white;
+  color: #0f0808;
+}
+.bookcover .ms-doc .el-row{
+  padding: 0 20px;
+  margin-bottom: 24px;
+}
+.bookcover .ms-doc .el-row:first-child{
+  border-bottom: 4px solid #d9d9d9;
+  padding-bottom: 18px;
+}
+.bookcover .ms-doc .el-row .upload-cover{
+  /*width: 200px;*/
+}
+.bookcover .ms-doc .book-cover_el{
+  width: 180px;
+  height: 240px;
+  background-color: #d9d9d9;
+  border-radius: 4px;
+}
+.bookcover .ms-doc p{
+  width: 180px;
+  text-align: center;
+  margin-top: 14px;
+  font-size: 12px;
+  color: #a1a1a1;
+}
+.bookcover .ms-doc .book-cover_cg{
+  width: 120px;
+  height: 50px;
+  border-radius: 6px;
+  text-align: center;
+  line-height: 50px;
+  background-color: #303030;
+  margin-left: 30px;
+  cursor: pointer;
+  color: white;
+}
+.bookcover .ms-doc .book-cover_rule ul li{
+  font-size: 12px;
+  line-height: 18px;
+  margin-top: 4px;
+  color: #666;
+}
+.bookcover .ms-doc .book-cover_rule ul:last-child{margin-top: 28px;}
+
+/*右侧内容*/
+.contant{
+    
+}
