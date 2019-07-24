@@ -12,7 +12,7 @@ $(function () {
         alert("您还未安装过插件，双击开发包目录里的WebComponentsKit.exe安装！");
 		return;
     }
-	
+	console.log('loading-1')
 	// 初始化插件参数及插入插件
 	WebVideoCtrl.I_InitPlugin(500, 300, {
         bWndFull: true,//是否支持单窗口双击全屏，默认支持 true:支持 false:不支持

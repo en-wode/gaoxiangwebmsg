@@ -69,6 +69,21 @@ export default {
                 {
                     icon: 'el-icon-menu',
                     index: '3',
+                    name: '视频监控',
+                    subs: [
+                        {
+                            index: '/Devicevideo',
+                            name: '视频监控'
+                        },
+                        {
+                            index: '/Videocontrol',
+                            name: '监控云控'
+                        }
+                    ]
+                },
+                {
+                    icon: 'el-icon-menu',
+                    index: '4',
                     name: '历史记录',
                     subs: [
                         {
@@ -87,7 +102,7 @@ export default {
                 },
                 {
                     icon: 'el-icon-menu',
-                    index: '4',
+                    index: '5',
                     name: '企业信息',
                     subs: [
                         {

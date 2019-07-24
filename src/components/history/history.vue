@@ -20,7 +20,6 @@
                 <div :style="{height:'600px',width:'95%',marginTop: '108px',marginBottom: '68px'}" ref='myEchart'></div>
             </div>
         </div>
-
     </div>
 </template>
 <script>

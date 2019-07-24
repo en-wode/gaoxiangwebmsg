@@ -10,10 +10,16 @@
       <script src="static/js/haikang/jquery-1.7.1.min.js"></script>
       <script src="static/js/haikang/webVideoCtrl.js"></script>
       <script src="static/js/haikang/haikang.js"></script>
+      <script src="static/js/yingshiyun/yinshi.js"></script>
       <script src="static/js/echarts.common.min.js"></script>
   </head>
   <body>
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>
+  <script language="javascript" for="EZUIKit" event="PluginEventHandler(lEventType, strErrorCode, lInterErrorCode)">   //打开预览时触发该事件
+      setTimeout(function(){
+          PluginEventHandler(lEventType, strErrorCode, lInterErrorCode);
+      }, 3000);
+  </script>
 </html>

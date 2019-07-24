@@ -143,6 +143,9 @@ input:-webkit-autofill{
 .gtasks_func{
     min-height: 300px!important;
 }
+.gtasks_func .func{
+    cursor: pointer;
+}
 .ms-doc article h1{
   font-size:32px;
   padding-bottom: 10px;

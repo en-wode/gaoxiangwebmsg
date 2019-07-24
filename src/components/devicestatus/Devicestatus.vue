@@ -24,7 +24,7 @@
                     <el-button type="primary" @click="onSubmit">查询</el-button>
                 </el-form-item>
             </el-form>
-            <el-col :span="12">
+            <el-col :span="24">
                 <div class="progress_box">
                     <canvas class="progress_bg"   id="canvasProgressbg" height="200" width="200" style="z-index: 0;top: 0px;">  </canvas>
                     <canvas class="progress_canvas"  id="canvasProgress" height="200" width="200" style="z-index: 1;">  </canvas>
@@ -68,199 +68,9 @@
                     <div :style="{height:'300px',width:'100%',marginTop: '108px'}" ref='myEchart'></div>
                 </div>
             </el-col>
-            <el-col :span="12">
-                <div id="divPlugin" class="plugin"></div>
-            </el-col>
-            <div class="haikang">
-                <div class="container">
-                    <div class="player">
-                        <div class="left">
-                            <fieldset class="login">
-                                <legend>登录</legend>
-                                <table cellpadding="0" cellspacing="3" border="0">
-                                    <tr>
-                                        <td class="tt">IP地址</td>
-                                        <td><input id="loginip" type="text" class="txt" value="192.168.0.1" /></td>
-                                        <td class="tt">端口号</td>
-                                        <td><input id="port" type="text" class="txt" value="80" /></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="tt">用户名</td>
-                                        <td><input id="username" type="text" class="txt" value="admin" /></td>
-                                        <td class="tt">密码</td>
-                                        <td><input id="password" type="password" class="txt" value="lanxiang.123" /></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="tt">设备端口</td>
-                                        <td colspan="2"><input id="deviceport" type="text" class="txt" value="8000" />（可选参数）</td>
-                                        <td>
-                                            窗口分割数&nbsp;
-                                            <select class="sel2" onchange="changeWndNum(this.value);">
-                                                <option value="1">1x1</option>
-                                                <option value="2" selected>2x2</option>
-                                                <option value="3">3x3</option>
-                                                <option value="4">4x4</option>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="4">
-                                            <input type="button" class="btn" value="登录" onclick="clickLogin();" />
-                                            <input type="button" class="btn" value="退出" onclick="clickLogout();" />
-                                            <input type="button" class="btn2" value="获取基本信息" onclick="clickGetDeviceInfo();" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="tt">已登录设备</td>
-                                        <td>
-                                            <select id="ip" class="sel" onchange="getChannelInfo();"></select>
-                                        </td>
-                                        <td class="tt">通道列表</td>
-                                        <td>
-                                            <select id="channels" class="sel"></select>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </fieldset>
-                        </div>
-                        <div class="left">
-                            <fieldset class="preview">
-                                <legend>预览</legend>
-                                <table cellpadding="0" cellspacing="3" border="0">
-                                    <tr>
-                                        <td class="tt">码流类型</td>
-                                        <td>
-                                            <select id="streamtype" class="sel">
-                                                <option value="1">主码流</option>
-                                                <option value="2">子码流</option>
-                                                <option value="3">第三码流</option>
-                                                <option value="4">转码码流</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <input type="button" class="btn" value="开始预览" onclick="clickStartRealPlay();" />
-                                            <input type="button" class="btn" value="停止预览" onclick="clickStopRealPlay();" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="tt">音量</td>
-                                        <td>
-                                            <input type="text" id="volume" class="txt" value="50" maxlength="3" />&nbsp;<input type="button" class="btn" value="设置" onclick="clickSetVolume();" />（范围：0~100）
-                                        </td>
-                                        <td>
-                                            <input type="button" class="btn" value="打开声音" onclick="clickOpenSound();" />
-                                            <input type="button" class="btn" value="关闭声音" onclick="clickCloseSound();" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="tt">对讲通道</td>
-                                        <td>
-                                            <select id="audiochannels" class="sel">
-
-                                            </select>
-                                            <input type="button" class="btn" value="获取通道" onclick="clickGetAudioInfo();" />
-                                        </td>
-                                        <td>
-                                            <input type="button" class="btn" value="开始对讲" onclick="clickStartVoiceTalk();" />
-                                            <input type="button" class="btn" value="停止对讲" onclick="clickStopVoiceTalk();" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3">
-                                            <input type="button" class="btn" value="抓图" onclick="clickCapturePic();" />
-                                            <input type="button" class="btn" value="开始录像" onclick="clickStartRecord();" />
-                                            <input type="button" class="btn" value="停止录像" onclick="clickStopRecord();" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3">
-                                            <input type="button" class="btn2" value="启用电子放大" onclick="clickEnableEZoom();" />
-                                            <input type="button" class="btn2" value="禁用电子放大" onclick="clickDisableEZoom();" />
-                                            <input type="button" class="btn2" value="启用3D放大" onclick="clickEnable3DZoom();" />
-                                            <input type="button" class="btn2" value="禁用3D放大" onclick="clickDisable3DZoom();" />
-                                            <input type="button" class="btn" value="全屏" onclick="clickFullScreen();" />
-                                        </td>
-                                    </tr>
-                                </table>
-                            </fieldset>
-                            <fieldset class="ptz">
-                                <legend>云台控制</legend>
-                                <table cellpadding="0" cellspacing="3" border="0" class="left">
-                                    <tr>
-                                        <td>
-                                            <input type="button" class="btn" value="左上" onmousedown="mouseDownPTZControl(5);" onmouseup="mouseUpPTZControl();" />
-                                            <input type="button" class="btn" value="上" onmousedown="mouseDownPTZControl(1);" onmouseup="mouseUpPTZControl();" />
-                                            <input type="button" class="btn" value="右上" onmousedown="mouseDownPTZControl(7);" onmouseup="mouseUpPTZControl();" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="button" class="btn" value="左" onmousedown="mouseDownPTZControl(3);" onmouseup="mouseUpPTZControl();" />
-                                            <input type="button" class="btn" value="自动" onclick="mouseDownPTZControl(9);" />
-                                            <input type="button" class="btn" value="右" onmousedown="mouseDownPTZControl(4);" onmouseup="mouseUpPTZControl();" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="button" class="btn" value="左下" onmousedown="mouseDownPTZControl(6);" onmouseup="mouseUpPTZControl();" />
-                                            <input type="button" class="btn" value="下" onmousedown="mouseDownPTZControl(2);" onmouseup="mouseUpPTZControl();" />
-                                            <input type="button" class="btn" value="右下" onmousedown="mouseDownPTZControl(8);" onmouseup="mouseUpPTZControl();" />
-                                        </td>
-                                    </tr>
-                                </table>
-                                <table cellpadding="0" cellspacing="3" border="0" class="left">
-                                    <tr>
-                                        <td class="tt">云台速度</td>
-                                        <td>
-                                            <select id="ptzspeed" class="sel">
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
-                                                <option>6</option>
-                                                <option>7</option>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="tt">预置点号</td>
-                                        <td><input id="preset" type="text" class="txt" value="1" /></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">
-                                            <input type="button" class="btn" value="设置" onclick="clickSetPreset();" />
-                                            <input type="button" class="btn" value="调用" onclick="clickGoPreset();" />
-                                        </td>
-                                    </tr>
-                                </table>
-                                <table cellpadding="0" cellspacing="3" border="0" class="left">
-                                    <tr>
-                                        <td class="tt"><input type="button" class="btn2" value="变倍+" onmousedown="PTZZoomIn()" onmouseup="PTZZoomStop()"></td>
-                                        <td><input type="button" class="btn2" value="变倍-" onmousedown="PTZZoomout()" onmouseup="PTZZoomStop()"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="tt"><input type="button" class="btn2" value="变焦+" onmousedown="PTZFocusIn()" onmouseup="PTZFoucusStop()"></td>
-                                        <td><input type="button" class="btn2" value="变焦-" onmousedown="PTZFoucusOut()" onmouseup="PTZFoucusStop()"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="tt"><input type="button" class="btn2" value="光圈+" onmousedown="PTZIrisIn()" onmouseup="PTZIrisStop()"></td>
-                                        <td><input type="button" class="btn2" value="光圈-" onmousedown="PTZIrisOut()" onmouseup="PTZIrisStop()"></td>
-                                    </tr>
-                                </table>
-                            </fieldset>
-                            <fieldset class="operate">
-                                <legend>操作信息</legend>
-                                <div id="opinfo" class="opinfo"></div>
-                            </fieldset>
-                            <fieldset class="callback">
-                                <legend>事件回调信息</legend>
-                                <div id="cbinfo" class="cbinfo"></div>
-                            </fieldset>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!--<el-col :span="12">-->
+                <!--<div id="divPlugin" class="plugin"></div>-->
+            <!--</el-col>-->
         </el-row>
     </div>
 </template>
@@ -316,11 +126,13 @@
             };
         },
         created () {
+            this.$nextTick(function () {
+                // this.getequipment();
+            })
         },
         mounted () {
             this.drawProgressbg();
             this.countInterval();
-
             this.getequipment();
             // this.deviceData();
             // setInterval(()=>{
@@ -338,6 +150,7 @@
                 const params ={userId: util.session('user').result.userId};
                 equipmentList(params).then(function (response){
                     var list;
+                    console.log(1)
                     for(list in response.data.result){
                         that.formInline.dataList.push( {value: response.data.result[list].id, label: response.data.result[list].equipmentName + '号设备'} ) ;
                         if(list == 0){
@@ -349,10 +162,10 @@
             onSubmit(val) {
                 const that = this;
                 let params = {equipmentId: ''};
-                let gethistory = {equipmentId: that.selectDevice,title: 'waterLevelInWell'};
+                let gethistory = {equipmentId: that.selectDevice,title: 'waterLevelInWell',time:'2018-07-18',index: 2};
                 params.equipmentId = that.selectDevice;
                 getIoData(params).then(function (response){
-                    console.log(response)
+                    console.log(response);
                     that.deviceData = response.data.result;
                     that.deviceData.paishui = parseFloat((that.deviceData.sluiceOpeningDegree / that.deviceData.sewerageSluice * 100).toFixed(2));
                     that.deviceData.jiewu =parseFloat((that.deviceData.sluiceSluiceOpeningDegree / that.deviceData.sluiceHeight * 100).toFixed(2));
@@ -362,7 +175,11 @@
                     if(response.data.code === 1){
                         that.drawchart(response.data.result);
                     } else {
-                        console.log('暂无数据');
+                        if (response.data.msg) {
+                            console.log('无数据当前页面刷新了')
+                        } else {
+                            console.log(response.data.msg);
+                        }
                     }
                 })
             },

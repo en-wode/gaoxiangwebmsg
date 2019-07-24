@@ -32,6 +32,16 @@ export default new Router({
                     component: resolve => require(['../components/devicestatus/Devicestatus.vue'], resolve)
                 },
                 {
+                    path: '/Devicevideo',
+                    name: '设备监控',
+                    component: resolve => require(['../components/video/video.vue'], resolve)
+                },
+                {
+                    path: '/Videocontrol',
+                    name: '监控云控',
+                    component: resolve => require(['../components/video/videocontrol.vue'], resolve)
+                },
+                {
                     path: '/history/:id',
                     name: '历史记录',
                     component: resolve => require(['../components/history/history.vue'], resolve)
