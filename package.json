@@ -17,7 +17,7 @@
     "element-ui": "^2.4.7",
     "ezuikit": "^1.0.0",
     "imports-loader": "^0.8.0",
-    "jquery": "3.3.1",
+    "jquery": "3.5.0",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vue2-scrollbar": "^0.0.3",
